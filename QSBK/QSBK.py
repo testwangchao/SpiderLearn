@@ -14,17 +14,14 @@ class reqUrl:
     #匹配段子
     @property
     def getText(self):
-        items = re.findall('''<div class="author clearfix">.*?alt="(.*?)".*?class="articleGender womenIcon">(.*?)</div>.*?class="content">.*?<span>(.*?)</span>.*?</a>(.*?)<div class="stats".*?"single-clear"></div>(.*?)''',self.getHtml,re.S)
+        items = re.findall('''<div class="author clearfix">.*?alt="(.*?)".*?class="articleGender womenIcon">(.*?)</div>.*?class="content">.*?<span>(.*?)</span>.*?</a>(.*?)<div class="stats".*?"single-clear"></div>(.*?)</div>''',self.getHtml,re.S)
         return items
         for item in items:
             haveImg = re.search('img',item[3])
             if not haveImg:
-                if not item[4]:
-                    print item[0],item[1],item[2]
-                else:
-                    print item[0],item[1],item[2],item[4]
+                print item[4]
 
 if __name__ == '__main__':
-    print reqUrl().getText
+    print reqUrl().getText[0][4].strip('\n')
 
     #print re.search("[^>\n].*",a).group().strip(u"：")

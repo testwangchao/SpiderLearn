@@ -15,13 +15,17 @@ class reqUrl:
     @property
     def getText(self):
         items = re.findall('''<div class="author clearfix">.*?alt="(.*?)".*?class="articleGender womenIcon">(.*?)</div>.*?class="content">.*?<span>(.*?)</span>.*?</a>(.*?)<div class="stats".*?"single-clear"></div>(.*?)</div>''',self.getHtml,re.S)
-        return items
+        #return items
         for item in items:
             haveImg = re.search('img',item[3])
             if not haveImg:
-                print item[4]
-
+                haveHot = re.search('main-text',item[4])
+                if haveHot:
+                    hotText = re.search('<div class="main-text">(.*?)<div class="likenum">',item[4],re.S).group(1).strip(u'\n：')
+                    print u"作者:%s,年龄:%s,内容:%s,神评:%s"%(item[0].strip('\n'),item[1].strip('\n'),item[2].strip('\n'),hotText)
+                else:
+                    print item[0].strip('\n'),item[1].strip('\n'),item[2].strip('\n')
 if __name__ == '__main__':
-    print reqUrl().getText[0][4].strip('\n')
+    reqUrl().getText
 
     #print re.search("[^>\n].*",a).group().strip(u"：")
